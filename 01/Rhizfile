@@ -1,0 +1,4 @@
+(task "run"
+  (exec chpl solve.chpl)
+  (exec ./solve)
+  (delete solve))
