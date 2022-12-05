@@ -1,0 +1,2 @@
+(task "build"
+  (exec chpl solve.chpl  ../utils.chpl))
