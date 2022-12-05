@@ -7,13 +7,31 @@ config param stacks = 9;
 
 
 proc main() {
-    var (stackSrc, movesSrc) = parseInput(inputFile);
-    const stacks = parseStacks(stackSrc);
-    writeln(stacks);
-    stacks.move(3, 0, 2);
-    writeln(stacks);
+    cobegin {
+        part1();
+        part2();
+    }
 }
 
+proc part1() {
+    var (stacskSrc, movesSrc) = parseInput(inputFile);
+    var stacks = parseStacks(stacskSrc);
+    for moveSrc in movesSrc {
+        const move = parseMove(moveSrc);
+        stacks.move(move.amount, move.src, move.dest);
+    }
+    writeln("Part 1 solution: ", stacks.tops());
+}
+
+proc part2() {
+    var (stacskSrc, movesSrc) = parseInput(inputFile);
+    var stacks = parseStacks(stacskSrc);
+    for moveSrc in movesSrc {
+        const move = parseMove(moveSrc);
+        stacks.move2(move.amount, move.src, move.dest);
+    }
+    writeln("Part 2 solution: ", stacks.tops());
+}
 
 proc parseInput(inputFile: string): (List.list(string), List.list(string)) {
     var stacks = new List.list(string);
@@ -25,10 +43,9 @@ proc parseInput(inputFile: string): (List.list(string), List.list(string)) {
     return (stacks, moves);
 }
 
-
 // -------------------------------------------------
 // Stacks
-const StackIds: domain(1) = {0..8};
+const StackIds: domain(1) = {1..stacks};
 
 class Stacks {
     var stacks: [StackIds] List.list(string);
@@ -43,6 +60,22 @@ class Stacks {
             this.stacks[to].append(x);
         }
     }
+
+    proc move2(amount: int, from: int, to: int) {
+        var tmp = new List.list(string);
+        for i in 0..<amount {
+            tmp.append(this.stacks[from].pop());
+        }
+        while tmp.size > 0 {
+            this.stacks[to].append(tmp.pop());
+        }
+    }
+
+    proc tops(): string {
+        var s = "";
+        for stack in this.stacks do s += stack.last();
+        return s;
+    }
 }
 
 proc parseStacks(ref inputs: List.list(string)): Stacks{
@@ -53,7 +86,7 @@ proc parseStacks(ref inputs: List.list(string)): Stacks{
     while inputs.size > 0 {
         var line = inputs.pop();
         for idx in StackIds {
-            const pos = 1 + 4 * idx;
+            const pos = 1 + 4 * (idx - 1);
             if line.size > pos && !line.this(pos).isSpace() {
                 const s: string = line.this(pos);
                 stacks[idx].append(s);
