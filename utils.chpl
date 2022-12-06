@@ -12,6 +12,12 @@ module Utils {
         }
     }
 
+    proc readFile(path: string): string throws {
+        var inf = open(path, iomode.r);
+        var rdr = inf.reader();
+        return rdr.read(string);
+    }
+
     proc letters(src: string): Set.set(string) {
         var s = new Set.set(string);
         for c in src.items() {
