@@ -1,0 +1,3 @@
+(task "run"
+  (exec bb solve.clj)
+)
