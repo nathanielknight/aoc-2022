@@ -1,0 +1,8 @@
+(task "run"
+  (exec chpl solve.chpl "../utils.chpl")
+  (exec ./solve)
+)
+
+(task "build"
+  "Compile the program"
+  (exec chpl solve.chpl "../utils.chpl"))
