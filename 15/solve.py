@@ -229,6 +229,7 @@ def part2():
         if blkd < 4_000_000:
             answer_y = y
             break
+    print(answer_x, answer_y)
     print("Part 2:", (answer_x * 4000000) + answer_y)
     for b in beacons:
         assert not b.in_range((answer_x, answer_y))
