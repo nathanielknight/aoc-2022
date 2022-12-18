@@ -1,0 +1,3 @@
+- Encountered a compiler bug
+- Chapel solution is quite fast
+- Difficult to pass iterators around
