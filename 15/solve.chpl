@@ -2,7 +2,7 @@ use IO, FileSystem, FormattedIO, List;
 
 type Point = (int, int);
 
-type Beacons = [{0..24}] Beacon;
+type Beacons = [{0..25}] Beacon;
 
 record Beacon {
     const location: Point, signal: Point;
